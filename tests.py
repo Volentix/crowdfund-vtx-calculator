@@ -1,149 +1,82 @@
-from business.price import compute_price
-from business.bonus import compute_bonus
+from business.pricecalculator import compute_price
+from business.bonuscalculator import compute_bonus
+from business.vtxcalculator import compute_vtx
 
 def test_price_calculations():
     """
     Tests the compute_price function
     """
+    testdata = [
+        {'tokencount': 0, 'price': 2590},
+        {'tokencount': 112160, 'price': 2590},
+        {'tokencount': 112161, 'price': 2591},
+        {'tokencount': 224321, 'price': 2591},
+        {'tokencount': 224322, 'price': 2592},
+        {'tokencount': 281520000, 'price': 5099},
+        {'tokencount': 281524109, 'price': 5099},
+        {'tokencount': 281524110, 'price': 5100},
+    ]
 
-    # ---------------------------
-    # At exactly zero tokens sold
-    # ---------------------------
-
-    price = compute_price(0)
-    assert price == 2590
-
-    price = compute_price(112160)
-    assert price == 2590
-
-    # -------------------------------
-    # At tokens sold equal to 112,161
-    # -------------------------------
-
-    price = compute_price(112161)
-    assert price == 2591
-
-    # -------------------------------
-    # At tokens sold equal to 224,322
-    # -------------------------------
-
-    price = compute_price(224322)
-    assert price == 2592
-
-    # -------------------------------
-    # At tokens sold equal to 336,483
-    # -------------------------------
-
-    price = compute_price(336483)
-    assert price == 2593
-
-    # -------------------------------
-    # At tokens sold equal to 448,644
-    # -------------------------------
-
-    price = compute_price(448644)
-    assert price == 2594
-
-    # -------------------------------
-    # At tokens sold equal to 560,805
-    # -------------------------------
-
-    price = compute_price(560805)
-    assert price == 2595
-
-    # -------------------------------
-    # At tokens sold equal to 672,966
-    # -------------------------------
-
-    price = compute_price(672966)
-    assert price == 2596
-
-    # -------------------------------
-    # At tokens sold equal to 785,127
-    # -------------------------------
-
-    price = compute_price(785127)
-    assert price == 2597
-
-    # -----------------------------------
-    # At tokens sold equal to 281,520,000
-    # -----------------------------------
-
-    price = compute_price(281520000)
-    assert price == 5099
-
-    price = compute_price(281524109)
-    assert price == 5099
-
-    price = compute_price(281524110)
-    assert price == 5100
-
+    for testme in testdata:
+        price = compute_price(testme['tokencount'])
+        assert price == testme['price']
 
 def test_bonus_calculations():
     """
     Tests the compute_bonus function
     """
 
-    # -------------------
-    # Phase 1
-    # At zero tokens sold
-    # -------------------
+    testdata = [
+        {'tokencount': 0, 'bonus':20},
+        {'tokencount': 99000000, 'bonus':20},
+        {'tokencount': 99000000.0001, 'bonus':15},
+        {'tokencount': 171900000, 'bonus':15},
+        {'tokencount': 171900000.001, 'bonus':10},
+        {'tokencount': 226020000, 'bonus':10},
+        {'tokencount': 226020000.00001, 'bonus':5},
+        {'tokencount': 281520000, 'bonus':5},
+        {'tokencount': 281520000.0001, 'bonus':0},
+    ]
 
-    bonus = compute_bonus(100, 0)
-    assert bonus == 20
+    for testme in testdata:
+        bonus = compute_bonus(testme['tokencount'])
+        print(bonus)
+        assert bonus == testme['bonus']
 
-    # ---------------------------------
-    # Phase 1
-    # At exactly 99,000,000 tokens sold
-    # ---------------------------------
+def test_calculate_purchase():
+    """
+    Test to calculate the purchase of the tokens
+    """
+    testdata = [
+        {
+            'calcdata': {
+                'bonus':20, 
+                'price': 2590, 
+                'satoshi_purchase_amount': 2590
+            },
+            'total_vtx_pre_bonus': 1.0,
+            'bonus_vtx': 0.2,
+            'total_vtx': 1.2
+        },
+        {
+            'calcdata': {
+                'bonus':20, 
+                'price': 2590, 
+                'satoshi_purchase_amount': 5180
+            },
+            'total_vtx_pre_bonus': 2.0,
+            'bonus_vtx': 0.4,
+            'total_vtx': 2.4
+        }
+    ]
 
-    bonus = compute_bonus(100, 99000000)
-    assert bonus == 20
+    for testme in testdata:
+        result = compute_vtx(testme['calcdata'])
+        assert result['total_vtx_pre_bonus'] == testme['total_vtx_pre_bonus']
+        assert result['bonus_vtx'] == testme['bonus_vtx']
+        assert result['total_vtx'] == testme['total_vtx']
 
-    # ---------------------------------
-    # Phase 2
-    # At exactly 99,000,001 tokens sold
-    # ---------------------------------
 
-    bonus = compute_bonus(100, 99000001)
-    assert bonus == 15
 
-    # ----------------------------------
-    # Phase 2
-    # At exactly 171,900,000 tokens sold
-    # ----------------------------------
-
-    bonus = compute_bonus(100, 171900000)
-    assert bonus == 15
-
-    # ----------------------------------
-    # Phase 3
-    # At exactly 171,900,001 tokens sold
-    # ----------------------------------
-
-    bonus = compute_bonus(100, 171900001)
-    assert bonus == 10
-
-    # ----------------------------------
-    # Phase 3
-    # At exactly 226,020,000 tokens sold
-    # ----------------------------------
-
-    bonus = compute_bonus(100, 226020000)
-    assert bonus == 10
-
-    # ----------------------------------
-    # Phase 4
-    # At exactly 226,020,001 tokens sold
-    # ----------------------------------
-
-    bonus = compute_bonus(100, 226020001)
-    assert bonus == 5
-
-    # ----------------------------------
-    # Phase 4
-    # At exactly 281,520,000 tokens sold
-    # ----------------------------------
-
-    bonus = compute_bonus(100, 281520000)
-    assert bonus == 5
+        # assert result['total_vtx'] == testme['total_vtx']
+    
