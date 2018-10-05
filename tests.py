@@ -13,8 +13,8 @@ def test_price_calculations():
     price = compute_price(0)
     assert price == 2590
 
-    # price = compute_price(112160)
-    # assert price == 2590
+    price = compute_price(112160)
+    assert price == 2590
 
     # -------------------------------
     # At tokens sold equal to 112,161
@@ -70,6 +70,12 @@ def test_price_calculations():
     # -----------------------------------
 
     price = compute_price(281520000)
+    assert price == 5099
+
+    price = compute_price(281524109)
+    assert price == 5099
+
+    price = compute_price(281524110)
     assert price == 5100
 
 
