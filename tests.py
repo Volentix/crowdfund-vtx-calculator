@@ -1,5 +1,5 @@
-from calculator import compute_price, compute_bonus
-
+from business.price import compute_price
+from business.bonus import compute_bonus
 
 def test_price_calculations():
     """
@@ -12,6 +12,9 @@ def test_price_calculations():
 
     price = compute_price(0)
     assert price == 2590
+
+    # price = compute_price(112160)
+    # assert price == 2590
 
     # -------------------------------
     # At tokens sold equal to 112,161
