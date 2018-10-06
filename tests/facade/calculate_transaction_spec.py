@@ -15,12 +15,7 @@ def mock_calculator():
             'tokencount': 0, 
             'bonus_return': 20,
             'satoshi_per_vtx': 2590,
-            'satoshi_amount_for_puchase': 2590,
-            'vtx_request': {
-                'bonus': 20, 
-                'price': 2590, 
-                'satoshi_amount_for_puchase': 2590
-            }
+            'satoshi_amount_for_puchase': 2590
         },
         {
             'vtx_return':{ 
@@ -48,4 +43,4 @@ def test_calculate_transaction(mock_calculator, ask, answered):
 
     mock_calculator.bonus.assert_called_with(ask['tokencount'])
     mock_calculator.satoshi_per_vtx.assert_called_with(ask['tokencount'])
-    mock_calculator.vtx_amount_purchased.assert_called_with(ask['vtx_request'])
+    mock_calculator.vtx_amount_purchased.assert_called_with(answered['vtx_return']['request'])
