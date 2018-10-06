@@ -1,5 +1,5 @@
 import pytest
-from business.price_calculator import compute_price
+from business.satoshi_calculator import compute_satoshi
 
 @pytest.mark.parametrize('tokencount, price', [
   (0, 2590),
@@ -11,6 +11,6 @@ from business.price_calculator import compute_price
   (281524109, 5099),
   (281524110, 5100),
 ])
-def test_price_calculations(tokencount, price):
-    rprice = compute_price(tokencount)
+def test_satoshi_calculation(tokencount, price):
+    rprice = compute_satoshi(tokencount)
     assert rprice == price

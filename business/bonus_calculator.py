@@ -1,7 +1,4 @@
 def compute_bonus(tokens_sold):
-    """
-    Computes the VTX bonus given the number of tokens sold so far
-    """
     bonus = 0
     if 0 <= tokens_sold <= 99000000:
         bonus = 20
@@ -11,6 +8,5 @@ def compute_bonus(tokens_sold):
         bonus = 10
     if 226020000 < tokens_sold <= 281520000:
         bonus = 5
-    
     return bonus
 

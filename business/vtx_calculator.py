@@ -5,7 +5,7 @@ def compute_vtx(data):
     # 0.00000001
     # 100 Million V = 1 VTX
 
-    vtx_pre_bonus = data['satoshi_purchase_amount'] / data['price']
+    vtx_pre_bonus = data['satoshi_amount_for_puchase'] / data['price']
 
     bonus_vtx = 0
     if (data['bonus'] > 0):
