@@ -1,31 +1,36 @@
 import pytest
-from mock import Mock
-from decimal import *
+from decimal import Decimal
+try:
+    from mock import Mock
+except ModuleNotFoundError:
+    from unittest.mock import Mock
 
 from business.calculator import Calculator
 from facade.calculate_transaction import TransactionCalculator
+
 
 @pytest.fixture
 def mock_calculator():
     return Mock(spec=Calculator)
 
+
 @pytest.mark.parametrize('ask, answered', [
     (
         {
-            'tokencount': 0, 
+            'tokencount': 0,
             'bonus_return': 20,
             'satoshi_per_vtx': 2590,
             'satoshi_amount_for_puchase': 2590
         },
         {
-            'vtx_return':{ 
+            'vtx_return': { 
                 'request': {
-                    'bonus': 20, 
+                    'bonus': 20,
                     'price': 2590, 
                     'satoshi_amount_for_puchase': 2590
                 },
                 'response': {
-                    'vtx_pre_bonus': Decimal(100), 
+                    'vtx_pre_bonus': Decimal(100),
                     'bonus_vtx': Decimal(20),
                     'total_vtx': Decimal(120),
                 }
