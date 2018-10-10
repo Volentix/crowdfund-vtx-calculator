@@ -8,8 +8,8 @@ class TransactionCalculator:
 
     def calculate(self, tokens_sold, satoshi_amount_for_puchase):
         request = {
-            'bonus': self.calculator.bonus(tokens_sold), 
-            'price': self.calculator.satoshi_per_vtx(tokens_sold), 
+            'bonus': self.calculator.bonus(tokens_sold),
+            'price': self.calculator.satoshi_per_vtx(tokens_sold),
             'satoshi_amount_for_puchase': satoshi_amount_for_puchase
         }
         rvalues = {
