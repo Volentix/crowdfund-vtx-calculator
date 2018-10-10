@@ -1,8 +1,9 @@
-from decimal import *
+from decimal import Decimal
 import math
 
+
 class Calculator:
-    
+
     def bonus(self, tokens_sold):
         bonus = 0
         if 0 <= tokens_sold <= 99000000:
@@ -14,7 +15,7 @@ class Calculator:
         if 226020000 < tokens_sold <= 281520000:
             bonus = 5
         return bonus
-    
+
     def satoshi_per_vtx(self, tokens_sold):
         # TODO: Remove hardcoded value
         increment = 112161
@@ -33,7 +34,7 @@ class Calculator:
 
         bonus_vtx = 0
         if (data['bonus'] > 0):
-            bonus_vtx = vtx_pre_bonus* data['bonus'] / 100
+            bonus_vtx = vtx_pre_bonus * data['bonus'] / 100
 
         return {
             'vtx_pre_bonus': round(Decimal(vtx_pre_bonus), 8), 

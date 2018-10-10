@@ -6,6 +6,6 @@ class TokensSold:
 
     def current_token(self):
         return self.current_token
-    
+
     def update_current_token(self, current_token):
         self.current_token = current_token

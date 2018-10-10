@@ -5,8 +5,8 @@ try:
 except ModuleNotFoundError:
     from unittest.mock import Mock
 
-from business.calculator import Calculator
-from facade.calculate_transaction import TransactionCalculator
+from ...business.calculator import Calculator
+from ...facade.calculate_transaction import TransactionCalculator
 
 
 @pytest.fixture
@@ -43,8 +43,9 @@ def test_calculate_transaction(mock_calculator, ask, answered):
     mock_calculator.satoshi_per_vtx.return_value = ask['satoshi_per_vtx']
     mock_calculator.vtx_amount_purchased.return_value = answered['vtx_return']['response']
 
-    tc = TransactionCalculator(mock_calculator)
-    assert tc.calculate(ask['tokencount'],ask['satoshi_amount_for_puchase']) == answered['vtx_return']
+    tc = TransactionCalculator()
+    tc.calculator = mock_calculator
+    assert tc.calculate(ask['tokencount'], ask['satoshi_amount_for_puchase']) == answered['vtx_return']
 
     mock_calculator.bonus.assert_called_with(ask['tokencount'])
     mock_calculator.satoshi_per_vtx.assert_called_with(ask['tokencount'])
